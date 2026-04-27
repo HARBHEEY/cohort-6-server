@@ -24,6 +24,28 @@ app.get('/users/:id', (req, res) =>{
     res.status(200).json(user)
 })
 
+app.post('/new-users',(req, res) =>{
+    const { name, email} = req.body;
+
+    //validate input
+    if( !name || !email){
+        return res.status(400).json({ error: "Name and email are required"})
+    }
+
+    //create new user object
+     const newUser = {
+       id: users.length + 1,
+       name: name,
+       email: email,
+    }
+   users.push(newUser);
+
+    //201 created = resource created successfully
+    res.status(201).json(newUser);
+
+})
+
+
 //routehandler
 app.get('/',(req, res)=>{
     res.send("server is up and running")
